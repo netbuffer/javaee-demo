@@ -7,16 +7,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "index", urlPatterns = {"/"})
-public class IndexServlet extends HttpServlet {
+import static cn.netbuffer.constant.Constant.JSP_SUFFIX;
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.getWriter().write("success");
-    }
+@WebServlet(name = "route", urlPatterns = {"/route"})
+public class RouteServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/index.jsp").forward(request, response);
+        String route = request.getParameter("route");
+        System.out.println("goto " + route + JSP_SUFFIX);
+        request.getRequestDispatcher("/" + route + JSP_SUFFIX).forward(request, response);
     }
 }
