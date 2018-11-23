@@ -1,5 +1,7 @@
 package cn.netbuffer.servlet;
 
+import cn.lcfms.utils.Vardump;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +19,7 @@ public class SystemServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Vardump.print(request);
         request.getRequestDispatcher("/system.jsp").forward(request, response);
     }
 }
