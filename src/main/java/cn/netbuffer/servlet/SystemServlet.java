@@ -20,6 +20,7 @@ public class SystemServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Vardump.print(request);
+        request.setAttribute("str", "hello ' \"<h1>world</h1>");
         request.getRequestDispatcher("/system.jsp").forward(request, response);
     }
 }
