@@ -4,3 +4,4 @@
 [gitee源](https://gitee.com/netbuffer/javaee-demo)
 
 * /TestServlet 测试javaee监听器
+* [cors-filter跨域设置](http://software.dzhuvinov.com/cors-filter-installation.html)

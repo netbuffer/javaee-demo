@@ -10,6 +10,24 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
+    <filter>
+        <filter-name>RequestDumperFilter</filter-name>
+        <filter-class>org.apache.catalina.filters.RequestDumperFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RequestDumperFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>CORS</filter-name>
+        <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>CORS</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <!--  custom session timeout  -->
     <session-config>
         <session-timeout>60</session-timeout>
