@@ -10,4 +10,9 @@
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
 
+    <!--  custom session timeout  -->
+    <session-config>
+        <session-timeout>60</session-timeout>
+    </session-config>
+
 </web-app>
