@@ -33,11 +33,17 @@
         <session-timeout>60</session-timeout>
     </session-config>
 
-    <!--  所有jsp中，去除头部空白行  -->
+
     <jsp-config>
+        <!--  所有jsp中，去除头部空白行  -->
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>
             <trim-directive-whitespaces>true</trim-directive-whitespaces>
+        </jsp-property-group>
+        <jsp-property-group>
+            <url-pattern>/content.jsp</url-pattern>
+            <include-prelude>/header.jsp</include-prelude>
+            <include-coda>/footer.jsp</include-coda>
         </jsp-property-group>
     </jsp-config>
 
