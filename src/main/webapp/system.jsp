@@ -8,6 +8,7 @@
     <title>system</title>
 </head>
 <body>
+jsp version:<%= JspFactory.getDefaultFactory().getEngineInfo().getSpecificationVersion() %><br/>
 <%=InetAddress.getLocalHost().toString()%><br/>
 str:${util:escapeHtml4(str)}
 <script type="text/javascript">
