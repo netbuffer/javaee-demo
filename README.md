@@ -5,3 +5,4 @@
 
 * /TestServlet 测试javaee监听器
 * [cors-filter跨域设置](http://software.dzhuvinov.com/cors-filter-installation.html)
+* 通过filter修改http response `ModifyHttpResponseFilter`
