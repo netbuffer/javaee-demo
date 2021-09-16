@@ -3,11 +3,13 @@ package cn.netbuffer.filter;
 import cn.netbuffer.filter.wrapper.ModifyHttpResponseWrapper;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @WebFilter(filterName = "ModifyHttpResponseFilter", urlPatterns = {"/json/*"})
 public class ModifyHttpResponseFilter implements Filter {
@@ -23,11 +25,14 @@ public class ModifyHttpResponseFilter implements Filter {
         System.out.println("-----------------before ModifyHttpResponseFilter------------------");
         filterChain.doFilter(servletRequest, modifyHttpResponseWrapper);
         System.out.println("-----------------after ModifyHttpResponseFilter------------------");
-        JSONObject jsonObject = JSON.parseObject(modifyHttpResponseWrapper.getResult());
+        JSONObject jsonObject = JSON.parseObject(StringUtils.isBlank(modifyHttpResponseWrapper.getResult()) ? modifyHttpResponseWrapper.getContent() : modifyHttpResponseWrapper.getResult());
         jsonObject.put("msg", "wrapper[" + jsonObject.getString("msg") + "]");
         HttpServletResponse response = (HttpServletResponse) modifyHttpResponseWrapper.getResponse();
         response.setContentType("application/json; charset=UTF-8");
-        response.getWriter().write(jsonObject.toJSONString());
+        PrintWriter printWriter = response.getWriter();
+        printWriter.write(jsonObject.toJSONString());
+        printWriter.flush();
+        printWriter.close();
     }
 
     @Override

@@ -18,6 +18,7 @@ public class JSONServlet extends HttpServlet {
         data.put("msg", "invoke success for " + this.getClass().getName());
         System.out.println("get json=" + data);
         response.getWriter().write(data.toString());
+//        response.getOutputStream().write(data.toString().getBytes());
     }
 
 }
