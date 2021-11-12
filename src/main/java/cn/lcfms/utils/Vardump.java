@@ -1,19 +1,12 @@
 package cn.lcfms.utils;
 
-import java.lang.reflect.Field;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Collection;
-import java.util.Enumeration;
-
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-import java.util.Stack;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Field;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.*;
 
 
 /**
@@ -541,6 +534,7 @@ public class Vardump extends Coll{
 		print(request.getParameterMap());
 		print(request.getCookies());
 		print(request.getSession());
+		printHttpHeaders(request);
 		printAfter();
 		show();
 	}	
@@ -563,7 +557,18 @@ public class Vardump extends Coll{
 		}
 		printAfter();
 		show();
-	}	
+	}
+
+	public static void printHttpHeaders(HttpServletRequest httpServletRequest) {
+		printBefore("headers");
+		Enumeration<String> names = httpServletRequest.getHeaderNames();
+		while (names.hasMoreElements()) {
+			String next = names.nextElement();
+			print("{(string)\"" + next + "\"(length=" + next.length() + ")=>", httpServletRequest.getHeader(next), "}");
+		}
+		printAfter();
+		show();
+	}
 	
 	private static void printBefore(String type){
 		append(type+"(");
