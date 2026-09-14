@@ -1,0 +1,11 @@
+services:
+  javaee-demo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: javawiki/javaee-demo:1.0.0
+    container_name: javaee-demo
+    hostname: javaee-demo
+    ports:
+      - "8080:8080"
+    restart: unless-stopped

@@ -1,42 +1,43 @@
 package cn.netbuffer.filter;
 
 import cn.netbuffer.filter.wrapper.ModifyHttpResponseWrapper;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.Filter;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebFilter(filterName = "ModifyHttpResponseFilter", urlPatterns = {"/json/*"})
+@WebFilter(filterName = "ModifyHttpResponseFilter", urlPatterns = "/json")
 public class ModifyHttpResponseFilter implements Filter {
 
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-    }
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
         HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
-        ModifyHttpResponseWrapper modifyHttpResponseWrapper = new ModifyHttpResponseWrapper(httpServletResponse);
-        System.out.println("-----------------before ModifyHttpResponseFilter------------------");
-        filterChain.doFilter(servletRequest, modifyHttpResponseWrapper);
-        System.out.println("-----------------after ModifyHttpResponseFilter------------------");
-        JSONObject jsonObject = JSON.parseObject(StringUtils.isBlank(modifyHttpResponseWrapper.getResult()) ? modifyHttpResponseWrapper.getContent() : modifyHttpResponseWrapper.getResult());
-        jsonObject.put("msg", "wrapper[" + jsonObject.getString("msg") + "]");
-        HttpServletResponse response = (HttpServletResponse) modifyHttpResponseWrapper.getResponse();
+        ModifyHttpResponseWrapper wrapper = new ModifyHttpResponseWrapper(httpServletResponse);
+        filterChain.doFilter(servletRequest, wrapper);
+
+        String payload = StringUtils.isBlank(wrapper.getResult()) ? wrapper.getContent() : wrapper.getResult();
+        ObjectNode jsonObject = (ObjectNode) OBJECT_MAPPER.readTree(payload);
+        JsonNode msgNode = jsonObject.get("msg");
+        String msg = msgNode == null || msgNode.isNull() ? "" : msgNode.asText();
+        jsonObject.put("msg", "wrapper[" + msg + "]");
+
+        HttpServletResponse response = (HttpServletResponse) wrapper.getResponse();
         response.setContentType("application/json; charset=UTF-8");
         PrintWriter printWriter = response.getWriter();
-        printWriter.write(jsonObject.toJSONString());
+        printWriter.write(OBJECT_MAPPER.writeValueAsString(jsonObject));
         printWriter.flush();
-        printWriter.close();
     }
-
-    @Override
-    public void destroy() {
-    }
-
 }

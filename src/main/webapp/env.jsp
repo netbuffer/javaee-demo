@@ -1,11 +1,11 @@
 <%--
 https://github.com/trajano/util/blob/master/src/main/webapp/env.jsp
 --%>
-<%@ page pageEncoding="utf8" import="java.util.Map"
-         contentType="text/html; charset=utf8" %>
+<%@ page pageEncoding="UTF-8" import="java.util.Map"
+         contentType="text/html; charset=UTF-8" %>
 <%@ page import="java.util.TreeSet" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,9 +17,9 @@ https://github.com/trajano/util/blob/master/src/main/webapp/env.jsp
             text-decoration: none;
         }
     </style>
-    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body data-target="#scrollspy" data-spy="scroll">
 <div class="container-fluid">

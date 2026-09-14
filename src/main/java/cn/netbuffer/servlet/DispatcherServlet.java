@@ -1,23 +1,22 @@
 package cn.netbuffer.servlet;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "dispatcher", urlPatterns = "/")
+/**
+ * 动态路由演示。不要映射 {@code /}，该路径留给容器 DefaultServlet / welcome-file。
+ */
+@WebServlet(name = "dispatcher", urlPatterns = "/dispatcher")
 public class DispatcherServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String uri = request.getRequestURI();
-        System.out.println("dynamic route");
-        System.out.println("get uri mapping from db...");
-        System.out.println("match uri config");
-        System.out.println("invoke service");
-        System.out.println("get result");
+        System.out.println("dispatcher demo: uri=" + uri);
+        response.setContentType("text/plain; charset=UTF-8");
         response.getWriter().write(uri);
     }
 }

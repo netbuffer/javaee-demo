@@ -1,15 +1,16 @@
 <%@ page import="java.net.InetAddress" %>
+<%@ page import="jakarta.servlet.jsp.JspFactory" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@taglib prefix="util" uri="/WEB-INF/util.tld" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+<%@ taglib prefix="util" uri="/WEB-INF/util.tld" %>
 <html>
 <head>
     <title>system</title>
 </head>
 <body>
 jsp version:<%= JspFactory.getDefaultFactory().getEngineInfo().getSpecificationVersion() %><br/>
-<%=InetAddress.getLocalHost().toString()%><br/>
+<%= InetAddress.getLocalHost() %><br/>
 str:${util:escapeHtml4(str)}
 <script type="text/javascript">
     var str = "${util:escapeEcmaScript(str)}";

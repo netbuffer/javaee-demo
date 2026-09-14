@@ -1,24 +1,24 @@
 package cn.netbuffer.servlet;
 
-import com.alibaba.fastjson.JSONObject;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "jsonServlet", urlPatterns = {"/json"})
+@WebServlet(name = "jsonServlet", urlPatterns = "/json")
 public class JSONServlet extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        JSONObject data = new JSONObject();
-        data.put("success", true);
-        data.put("msg", "invoke success for " + this.getClass().getName());
-        System.out.println("get json=" + data);
-        response.getWriter().write(data.toString());
-//        response.getOutputStream().write(data.toString().getBytes());
-    }
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ObjectNode data = OBJECT_MAPPER.createObjectNode();
+        data.put("success", true);
+        data.put("msg", "invoke success for " + getClass().getName());
+        response.setContentType("application/json; charset=UTF-8");
+        response.getWriter().write(OBJECT_MAPPER.writeValueAsString(data));
+    }
 }
