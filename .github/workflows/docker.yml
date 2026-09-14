@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - "v*"
+      - "jakarta-*"
   workflow_dispatch:
 
 env:
@@ -15,10 +16,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up JDK 25
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: "25"
           distribution: temurin
@@ -44,6 +45,7 @@ jobs:
           tags: |
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
+            type=ref,event=tag
             type=raw,value=latest
 
       - name: Build and push
